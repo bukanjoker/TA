@@ -49,20 +49,10 @@ public class UI extends javax.swing.JFrame {
         trafficlight();
         this.setLocationRelativeTo(null);
         
-        if (String.valueOf(jComboBox9.getSelectedItem()) == "default")
-        {
-            text1.setEditable(false);
-            text2.setEditable(false);
-            text3.setEditable(false);
-            text4.setEditable(false);
-        }
-        else
-        {
-            text1.setEditable(true);
-            text2.setEditable(true);
-            text3.setEditable(true);
-            text4.setEditable(true);
-        }
+        text1.setEditable(false);
+        text2.setEditable(false);
+        text3.setEditable(false);
+        text4.setEditable(false);
     }
     
     public void cars() 
@@ -686,7 +676,7 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_startActionPerformed
 
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        if (String.valueOf(jComboBox9.getSelectedItem()) == "default")
+        if (String.valueOf(jComboBox9.getSelectedItem()) == "Default")
         {
             text1.setEditable(false);
             text2.setEditable(false);
