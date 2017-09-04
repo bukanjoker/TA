@@ -17,9 +17,10 @@ import util.Warna;
 public class ThreadLampu extends Thread {
     private Jalan[] jalan;
     private String kondisi;
-    private double ratioMax;
     private int current = 0;
-    private int nextCurr = 1;
+    private int nextCurr;
+    private int iterasi;
+    private long time;
     private int[] urutan;
 
     public ThreadLampu(Jalan[] jalan, String kondisi, int[] urutan) 
@@ -35,21 +36,36 @@ public class ThreadLampu extends Thread {
         return ratio;
     }
     
-    public void changeLampu()
+    public void setWarnaLampu()
     {
-        jalan[current].setStatus(true);
-        System.out.println("["+jalan[current].getPosisi()+"] "+jalan[current].getLampu().getWarna());
-        long durasi = jalan[current].getLampu().getDurasi();
-        
-        if (kondisi == "dinamis") 
+        for (int i = 0; i < jalan.length; i++) 
         {
-            for (int i = 0; i < jalan.length; i++) {
-                if (i != current) 
+            if (i != current)
+            {
+                jalan[i].setStatus(false);
+            }
+            else
+            {
+                jalan[i].setStatus(true);
+                System.out.println("["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna());
+            }
+        }
+    }
+    
+    public void setCurrent()
+    {
+        if (kondisi == "dinamis")
+        {
+            double ratioMax = 0;
+            
+            for (int i = 0; i < jalan.length; i++)
+            {
+                if (i != current)
                 {
-                    jalan[i].setStatus(false);
                     //hrrn calculation
                     jalan[i].setWait(jalan[i].getListMobil().get(0).getWaktuDatang());
                     jalan[i].setRatio(HRRN(jalan[i].getWait(), jalan[i].getLampu().getDurasi()));
+                    //sort MaxRatio
                     if (jalan[i].getRatio() > ratioMax) 
                     {
                         ratioMax = jalan[i].getRatio();
@@ -57,27 +73,42 @@ public class ThreadLampu extends Thread {
                     }
                 }
             }
-            current = nextCurr;
         }
         else
         {
-            for (int i = 0; i < jalan.length; i++) {
-                if (i != current) 
-                {
-                    jalan[i].setStatus(false);
-                }
-            }
-            if (nextCurr < 3)
+            if (iterasi < jalan.length-1)
             {
-                nextCurr++;
+                iterasi++;
             }
-            else
+            else 
             {
-                nextCurr = 0;
+                iterasi = 0;
             }
-            current = urutan[nextCurr];
+            nextCurr = urutan[iterasi];
         }
         
+        current = nextCurr;
+    }
+    
+    public void lampuWork()
+    {
+        double interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
+        double durasi = jalan[current].getLampu().getDurasi();
+        
+        if (durasi-interval > 0)
+        {
+            
+        }
+        else
+        {
+            
+        }
+        
+        timer(time);
+    }
+    
+    public void timer(long durasi)
+    {
         try {
             sleep(durasi);
         } catch (InterruptedException ex) {
@@ -88,11 +119,22 @@ public class ThreadLampu extends Thread {
     @Override
     public void run()
     {
-        
-        
         while (true)
         {
-            changeLampu();
+            if (jalan[current].getListMobil().size() != 0) 
+            {
+                setWarnaLampu();
+                timer(jalan[current].getLampu().getDurasi());
+                setCurrent();
+            }
+            else
+            {
+                jalan[0].setStatus(false);
+                jalan[1].setStatus(false);
+                jalan[2].setStatus(false);
+                jalan[3].setStatus(false);
+            }
+            
 //            tesThread();
         }
     }
