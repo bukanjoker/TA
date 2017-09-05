@@ -268,7 +268,6 @@ public class UI extends javax.swing.JFrame {
         text1 = new javax.swing.JTextField();
         text2 = new javax.swing.JTextField();
         text3 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -278,16 +277,6 @@ public class UI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox4 = new javax.swing.JComboBox();
-        jComboBox5 = new javax.swing.JComboBox();
-        jComboBox6 = new javax.swing.JComboBox();
-        jComboBox7 = new javax.swing.JComboBox();
-        jComboBox8 = new javax.swing.JComboBox();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         statis = new javax.swing.JRadioButton();
         dinamis = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
@@ -516,10 +505,6 @@ public class UI extends javax.swing.JFrame {
         });
         getContentPane().add(text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 50, -1));
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel2.setText("SET RANDOM");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, -1, -1));
-
         jLabel3.setText("Jalan 4");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, -1, -1));
 
@@ -551,38 +536,6 @@ public class UI extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel11.setText("TIPE LAMPU :");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, -1, 20));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, -1, -1));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, -1, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 110, -1, -1));
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 140, -1, -1));
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 50, -1, -1));
-
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, -1, -1));
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox7, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 110, -1, -1));
-
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<default>", "random 1", "random 2", "random 3" }));
-        getContentPane().add(jComboBox8, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 140, -1, -1));
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel12.setText("OUT");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 30, -1, -1));
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel13.setText("IN");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, -1, -1));
 
         buttonGroup1.add(statis);
         statis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -778,22 +731,11 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel grenL;
     private javax.swing.JLabel grenR;
     private javax.swing.JLabel grenU;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JComboBox jComboBox6;
-    private javax.swing.JComboBox jComboBox7;
-    private javax.swing.JComboBox jComboBox8;
     private javax.swing.JComboBox jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

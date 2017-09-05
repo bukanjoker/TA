@@ -27,17 +27,7 @@ public class ThreadRemoveMobil extends Thread {
         while (true)
         {
             jalan.remove();
-//            tesThread();
         }
     }
     
-    public void tesThread()
-    {
-        try {
-            System.out.println("thread jalan3");
-            sleep(2000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ThreadLampu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

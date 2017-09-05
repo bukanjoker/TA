@@ -54,17 +54,18 @@ public class Jalan extends Thread {
                     arrival = arrival + System.currentTimeMillis();
                     m.setWaktuDatang(arrival);
                     listMobil.add(m);
-                    System.out.println("Mobil masuk["+posisi+"] Jumlah:"+listMobil.size());
+                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
                 } 
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
-//                notifyAll();
+                notify();
             }
             else
             {
                 try {
-                    wait();
+                    System.out.println("add loading...");
+                    sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -82,22 +83,19 @@ public class Jalan extends Thread {
                 {
                     sleep(interval);
                     listMobil.remove(0);
-                    System.out.println("Mobil KELUAR["+posisi+"] Jumlah:"+listMobil.size());
+                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
                 }
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
 //                notifyAll();
-//                    if (listMobil.isEmpty())
-//                    {
-//                        break;
-//                    }
             }
             else
             {
                 try {
-                    wait();
-                    System.out.println("remove - out of condition: ["+posisi+"]"+listMobil.size()+" "+lampu.getWarna());
+                    System.out.println("remove loading...");
+                    sleep(1000);
+//                    System.out.println("remove - out of condition: ["+posisi+"]"+listMobil.size()+" "+lampu.getWarna());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }

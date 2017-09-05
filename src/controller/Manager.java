@@ -54,14 +54,14 @@ public class Manager extends Thread {
         
         //threads start
         tLampu.start();
-        add1.start();
-        add2.start();
-        add3.start();
-        add4.start();
-        remove1.start();
-        remove2.start();
-        remove3.start();
-        remove4.start();
+//        add1.start();
+//        add2.start();
+//        add3.start();
+//        add4.start();
+//        remove1.start();
+//        remove2.start();
+//        remove3.start();
+//        remove4.start();
         
     }
     

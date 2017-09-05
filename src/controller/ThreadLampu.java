@@ -47,7 +47,7 @@ public class ThreadLampu extends Thread {
             else
             {
                 jalan[i].setStatus(true);
-                System.out.println("["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna());
+                System.out.println("["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna()+" "+jalan[i].getLampu().getDurasi()/1000+"detik");
             }
         }
     }
@@ -92,16 +92,20 @@ public class ThreadLampu extends Thread {
     
     public void lampuWork()
     {
-        double interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
-        double durasi = jalan[current].getLampu().getDurasi();
+        long interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
+        long durasi = jalan[current].getLampu().getDurasi();
         
         if (durasi-interval > 0)
         {
-            
+            durasi = durasi - interval;
+            time = interval;
+            jalan[current].getListMobil().remove(0);
+            interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
         }
         else
         {
-            
+            time = durasi;
+            durasi = 0;
         }
         
         timer(time);
@@ -121,19 +125,20 @@ public class ThreadLampu extends Thread {
     {
         while (true)
         {
-            if (jalan[current].getListMobil().size() != 0) 
-            {
+//            if (jalan[current].getListMobil().size() != 0) 
+//            {
                 setWarnaLampu();
                 timer(jalan[current].getLampu().getDurasi());
+//                lampuWork();
                 setCurrent();
-            }
-            else
-            {
-                jalan[0].setStatus(false);
-                jalan[1].setStatus(false);
-                jalan[2].setStatus(false);
-                jalan[3].setStatus(false);
-            }
+//            }
+//            else
+//            {
+//                jalan[0].setStatus(false);
+//                jalan[1].setStatus(false);
+//                jalan[2].setStatus(false);
+//                jalan[3].setStatus(false);
+//            }
             
 //            tesThread();
         }
