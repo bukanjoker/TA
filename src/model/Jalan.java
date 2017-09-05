@@ -18,7 +18,7 @@ import util.Warna;
  *
  * @author bukanjoker
  */
-public class Jalan extends Thread {
+public class Jalan {
     private Lampu lampu;
     private ArrayList<Mobil> listMobil;
     private double ratio;
@@ -50,7 +50,7 @@ public class Jalan extends Thread {
 
                 try 
                 {
-                    sleep(interval);
+                    wait(interval);
                     arrival = arrival + System.currentTimeMillis();
                     m.setWaktuDatang(arrival);
                     listMobil.add(m);
@@ -59,13 +59,13 @@ public class Jalan extends Thread {
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                notify();
+//                notifyAll();
             }
             else
             {
                 try {
                     System.out.println("add loading...");
-                    sleep(1000);
+                    wait(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -81,7 +81,7 @@ public class Jalan extends Thread {
                 long interval = listMobil.get(0).getIntervalKeluar();
                 try 
                 {
-                    sleep(interval);
+                    wait(interval);
                     listMobil.remove(0);
                     System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
                 }
@@ -94,7 +94,7 @@ public class Jalan extends Thread {
             {
                 try {
                     System.out.println("remove loading...");
-                    sleep(1000);
+                    wait(1000);
 //                    System.out.println("remove - out of condition: ["+posisi+"]"+listMobil.size()+" "+lampu.getWarna());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);

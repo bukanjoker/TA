@@ -30,6 +30,28 @@ public class ThreadLampu extends Thread {
         this.urutan = urutan;
     }
     
+    @Override
+    public void run()
+    {
+        while (true)
+        {
+//            if (jalan[current].getListMobil().size() != 0) 
+//            {
+                setWarnaLampu();
+                timer(jalan[current].getLampu().getDurasi());
+//                lampuWork();
+                setCurrent();
+//            }
+//            else
+//            {
+//                jalan[0].setStatus(false);
+//                jalan[1].setStatus(false);
+//                jalan[2].setStatus(false);
+//                jalan[3].setStatus(false);
+//            }
+        }
+    }
+    
     public double HRRN(double wait, long servis)
     {
         double ratio = (wait+servis)/servis;
@@ -115,40 +137,6 @@ public class ThreadLampu extends Thread {
     {
         try {
             sleep(durasi);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ThreadLampu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @Override
-    public void run()
-    {
-        while (true)
-        {
-//            if (jalan[current].getListMobil().size() != 0) 
-//            {
-                setWarnaLampu();
-                timer(jalan[current].getLampu().getDurasi());
-//                lampuWork();
-                setCurrent();
-//            }
-//            else
-//            {
-//                jalan[0].setStatus(false);
-//                jalan[1].setStatus(false);
-//                jalan[2].setStatus(false);
-//                jalan[3].setStatus(false);
-//            }
-            
-//            tesThread();
-        }
-    }
-    
-    public void tesThread()
-    {
-        try {
-            System.out.println("thread jalan1");
-            sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(ThreadLampu.class.getName()).log(Level.SEVERE, null, ex);
         }

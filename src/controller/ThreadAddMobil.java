@@ -29,7 +29,7 @@ public class ThreadAddMobil extends Thread {
     {
         while (true)
         {
-            jalan.add(10);
+            jalan.add(size);
         }
     }
     
