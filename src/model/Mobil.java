@@ -49,7 +49,7 @@ public class Mobil {
         switch (pil)
         {
             //default random
-            case "default": val = new Random().nextInt(3)+1;
+            case "default": val = new Random().nextInt(300)+1;
                     break;
             //random distribution
             case "pertama": val = new Random().nextInt(2)+1;
@@ -58,7 +58,7 @@ public class Mobil {
                     break;
         }
         
-        return val*1000;
+        return val*10;
     }
 
     public long getIntervalDatang() {
