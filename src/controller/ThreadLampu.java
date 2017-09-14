@@ -19,7 +19,7 @@ public class ThreadLampu extends Thread {
     private String kondisi;
     private int current = 0;
     private int nextCurr;
-    private int iterasi;
+    private int iterasi = 1;
     private long time;
     private int[] urutan;
 
@@ -35,20 +35,10 @@ public class ThreadLampu extends Thread {
     {
         while (true)
         {
-//            if (jalan[current].getListMobil().size() != 0) 
-//            {
-                setWarnaLampu();
-                timer(jalan[current].getLampu().getDurasi());
-//                lampuWork();
-                setCurrent();
-//            }
-//            else
-//            {
-//                jalan[0].setStatus(false);
-//                jalan[1].setStatus(false);
-//                jalan[2].setStatus(false);
-//                jalan[3].setStatus(false);
-//            }
+            setWarnaLampu();
+            timer(jalan[current].getLampu().getDurasi());
+            setCurrent();
+            
         }
     }
     
@@ -69,7 +59,7 @@ public class ThreadLampu extends Thread {
             else
             {
                 jalan[i].setStatus(true);
-                System.out.println("["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna()+" "+jalan[i].getLampu().getDurasi()/1000+"detik");
+//                System.out.println("Lampu ["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna()+" "+jalan[i].getLampu().getDurasi()/1000+"detik");
             }
         }
     }

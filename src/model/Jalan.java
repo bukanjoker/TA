@@ -27,12 +27,10 @@ public class Jalan {
     private double wait;
     private long start;
     private int size;
-    private long arrival;
     private String randomIN, randomOUT;
 
     public Jalan(Posisi posisi, boolean status)
     {
-        this.start = System.currentTimeMillis();
         this.posisi = posisi;
         this.status = status;
         
@@ -50,11 +48,10 @@ public class Jalan {
 
                 try 
                 {
-                    wait(interval);
-                    arrival = arrival + System.currentTimeMillis();
-                    m.setWaktuDatang(arrival);
+                    Thread.sleep(interval);
+                    m.setWaktuDatang(System.currentTimeMillis());
                     listMobil.add(m);
-                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
+//                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
                 } 
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,7 +61,7 @@ public class Jalan {
             else
             {
                 try {
-                    System.out.println("add loading...");
+//                    System.out.println("["+posisi+"]add loading...");
                     wait(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,9 +78,9 @@ public class Jalan {
                 long interval = listMobil.get(0).getIntervalKeluar();
                 try 
                 {
-                    wait(interval);
+                    Thread.sleep(interval);
                     listMobil.remove(0);
-                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
+//                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
                 }
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,7 +90,7 @@ public class Jalan {
             else
             {
                 try {
-                    System.out.println("remove loading...");
+//                    System.out.println("["+posisi+"]remove loading...");
                     wait(1000);
 //                    System.out.println("remove - out of condition: ["+posisi+"]"+listMobil.size()+" "+lampu.getWarna());
                 } catch (InterruptedException ex) {
@@ -105,11 +102,20 @@ public class Jalan {
 
     public double getWait() 
     {
-        return wait;
+        if (lampu.getWarna() == Warna.HIJAU || listMobil.size() == 0)
+        {
+            wait = 0;
+        }
+        else
+        {
+            wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
+        }
+        return wait/1000;
     }
 
-    public void setWait(long waktudatang) {
-        this.wait = System.currentTimeMillis() - waktudatang;
+    public void setWait(long wait) 
+    {
+        this.wait = wait;
     }
 
     public Lampu getLampu() {

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Jalan;
 import util.Posisi;
+import util.Warna;
 import view.UI;
 
 /**
@@ -63,12 +64,29 @@ public class Manager extends Thread {
         remove3.start();
         remove4.start();
         
-    }
-    
-    public double HRRN(double wait, long servis)
-    {
-        double ratio = (wait+servis)/servis;
-        return ratio;
+        while (true)
+        {
+            int current = 0;
+            for (int i = 0; i < jalan.length; i++) 
+            {
+                if (jalan[i].getLampu().getWarna() == Warna.HIJAU) 
+                {
+                    current = i;
+                }
+                print(i);
+            }
+            
+            try 
+            {
+                long durasi = jalan[current].getLampu().getDurasi();
+                System.out.println("Durasi: "+durasi/1000+"detik");
+                System.out.println("");
+                sleep(durasi);
+            } 
+            catch (InterruptedException ex) {
+                Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void print(int i)
@@ -76,14 +94,9 @@ public class Manager extends Thread {
         System.out.print("["+jalan[i].getPosisi()+"]");
         System.out.print("["+jalan[i].getLampu().getWarna()+"]");
         System.out.print("[Ratio:"+jalan[i].getRatio()+"]");
-        System.out.print("[Waktu Tunggu:"+jalan[i].getWait()/1000+"]");
+        System.out.print("[Waktu Tunggu:"+jalan[i].getWait()+"]");
         System.out.print("[Jumlah Mobil: "+jalan[i].getListMobil().size()+"]");
-        System.out.println("");
-        try {
-            sleep(jalan[i].getLampu().getDurasi());
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Manager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println("");   
     }
     
     public void setDurasi(long jalan1, long jalan2, long jalan3, long jalan4)

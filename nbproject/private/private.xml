@@ -5,10 +5,10 @@
         <group>
             <file>file:/D:/Program/TA/TA/src/controller/ThreadAddMobil.java</file>
             <file>file:/D:/Program/TA/TA/src/main/Main.java</file>
-            <file>file:/D:/Program/TA/TA/src/view/GUI.java</file>
             <file>file:/D:/Program/TA/TA/src/controller/ThreadLampu.java</file>
             <file>file:/D:/Program/TA/TA/src/controller/Manager.java</file>
             <file>file:/D:/Program/TA/TA/src/model/Jalan.java</file>
+            <file>file:/D:/Program/TA/TA/src/model/Lampu.java</file>
             <file>file:/D:/Program/TA/TA/src/view/UI.java</file>
             <file>file:/D:/Program/TA/TA/src/controller/ThreadRemoveMobil.java</file>
             <file>file:/D:/Program/TA/TA/src/model/Mobil.java</file>
