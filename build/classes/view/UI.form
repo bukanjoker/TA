@@ -17,7 +17,6 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -519,7 +518,7 @@
     <Component class="javax.swing.JLabel" name="carL11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/rsc/carLeftRight.png"/>
+          <Image iconType="3" name="/view/rsc/buffermaxLeftRight.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -579,7 +578,7 @@
     <Component class="javax.swing.JLabel" name="carB11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/rsc/carUpDown.png"/>
+          <Image iconType="3" name="/view/rsc/buffermaxUpDown.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -639,7 +638,7 @@
     <Component class="javax.swing.JLabel" name="carR11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/rsc/carLeftRight.png"/>
+          <Image iconType="3" name="/view/rsc/buffermaxLeftRight.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -699,7 +698,7 @@
     <Component class="javax.swing.JLabel" name="carU11">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/rsc/carUpDown.png"/>
+          <Image iconType="3" name="/view/rsc/buffermaxUpDown.png"/>
         </Property>
       </Properties>
       <Constraints>
@@ -960,7 +959,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="700" y="70" width="220" height="90"/>
+          <AbsoluteConstraints x="700" y="40" width="220" height="90"/>
         </Constraint>
       </Constraints>
 
@@ -1048,27 +1047,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="11" style="1"/>
-        </Property>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Not Connect"/>
-            <StringItem index="1" value="Connect Device"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
-      </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="760" y="30" width="100" height="30"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JButton" name="stop">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

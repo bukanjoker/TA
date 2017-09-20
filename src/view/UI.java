@@ -5,6 +5,7 @@
 package view;
 
 import controller.Manager;
+import controller.Serial;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -29,23 +30,23 @@ public class UI extends javax.swing.JFrame {
     Object txtDataIn;
     JLabel[][] cars;
     JLabel[][] trafficlight;
+    Serial serial;
     private Timer timer;
     private Jalan[] jalan;
     private int[] buffer = new int[4];
     private Manager manager;
-    private boolean run = false;
+    private boolean run = true;
     
-    public UI(Manager manager) 
+    public UI() 
     {
+        serial = new Serial(this);
         initComponents();
-        this.manager = manager;
         init();
     }
     
     public void init()
     {
 //        manager = new Manager();
-        jalan = manager.getJalan();
         cars();
         trafficlight();
         this.setLocationRelativeTo(null);
@@ -55,7 +56,9 @@ public class UI extends javax.swing.JFrame {
         text3.setEditable(false);
         text4.setEditable(false);
         
-        jPanSearch.setVisible(false);
+        jCommPort.setVisible(false);
+        lPort.setVisible(false);
+//        jPanSearch.setVisible(false);
     }
     
     public void cars() 
@@ -152,19 +155,28 @@ public class UI extends javax.swing.JFrame {
     {
         for (int i = 0; i < jalan.length; i++) 
         {
+            int buffer = 0;
             for (int j = 0; j < jalan[i].getListMobil().size(); j++) 
             {   
-                if (buffer[i] > jalan[i].getListMobil().size()) 
-                {
-                    cars[i][buffer[i]-1].setVisible(false);
-                    buffer[i] = jalan[i].getListMobil().size();
-                }
-                else 
-                {
-                    cars[i][j].setVisible(true);
-                    buffer[i] = jalan[i].getListMobil().size();
-                }
+//                if (buffer[i] > jalan[i].getListMobil().size()) 
+//                {
+//                    cars[i][buffer[i]-1].setVisible(false);
+//                }
+//                else 
+//                {
+//                    cars[i][j].setVisible(true);
+//                }
+//                buffer[i] = jalan[i].getListMobil().size();
                 
+                if (j % 3 == 0)
+                {
+                    cars[i][buffer].setVisible(true);
+                    buffer++;
+                }
+                else if (jalan[i].getListMobil().size() % 3 == 2)
+                {
+                    cars[i][buffer].setVisible(false);
+                }
             }
         }
     }
@@ -196,6 +208,12 @@ public class UI extends javax.swing.JFrame {
 
     public void setJalan(Jalan[] jalan) {
         this.jalan = jalan;
+    }
+    
+    public void setManager(Manager manager)
+    {
+        this.manager = manager;
+        this.jalan = manager.getJalan();
     }
 
     /**
@@ -288,7 +306,6 @@ public class UI extends javax.swing.JFrame {
         jCommPort = new javax.swing.JComboBox();
         lSearch = new javax.swing.JLabel();
         bConn = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
         stop = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
 
@@ -420,7 +437,7 @@ public class UI extends javax.swing.JFrame {
         carL10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carLeftRight.png"))); // NOI18N
         getContentPane().add(carL10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
-        carL11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carLeftRight.png"))); // NOI18N
+        carL11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/buffermaxLeftRight.png"))); // NOI18N
         getContentPane().add(carL11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
 
         carB7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
@@ -435,7 +452,7 @@ public class UI extends javax.swing.JFrame {
         carB10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
         getContentPane().add(carB10, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, -1, -1));
 
-        carB11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
+        carB11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/buffermaxUpDown.png"))); // NOI18N
         getContentPane().add(carB11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, -1, -1));
 
         carR7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carLeftRight.png"))); // NOI18N
@@ -450,7 +467,7 @@ public class UI extends javax.swing.JFrame {
         carR10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carLeftRight.png"))); // NOI18N
         getContentPane().add(carR10, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, -1, -1));
 
-        carR11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carLeftRight.png"))); // NOI18N
+        carR11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/buffermaxLeftRight.png"))); // NOI18N
         getContentPane().add(carR11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, -1, -1));
 
         carU7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
@@ -465,7 +482,7 @@ public class UI extends javax.swing.JFrame {
         carU10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
         getContentPane().add(carU10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
 
-        carU11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/carUpDown.png"))); // NOI18N
+        carU11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/buffermaxUpDown.png"))); // NOI18N
         getContentPane().add(carU11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, -1, -1));
 
         refresh.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -612,16 +629,7 @@ public class UI extends javax.swing.JFrame {
         jPanSearch.add(bConn);
         bConn.setBounds(60, 50, 100, 30);
 
-        getContentPane().add(jPanSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 70, 220, 90));
-
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Not Connect", "Connect Device" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, 100, 30));
+        getContentPane().add(jPanSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 220, 90));
 
         stop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         stop.setText("STOP");
@@ -656,61 +664,60 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_text3ActionPerformed
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        if (String.valueOf(jComboBox1.getSelectedItem()) == "Connect Device") 
+        if (run == false) 
         {
             //if not connected
-            JOptionPane.showMessageDialog(null, "Sorry can't run, you're not connected to a device");
+            JOptionPane.showMessageDialog(null, "Sorry can't start, please connect device first");
         }
         else
         {
-            run = true;
-        }
-        
-        if (String.valueOf(jComboBox9.getSelectedItem()) == "Edit") 
-        {
-            if (
-                text1.getText().equals("") || 
-                text2.getText().equals("") ||
-                text3.getText().equals("") ||
-                text4.getText().equals("")
-                ) 
+            if (String.valueOf(jComboBox9.getSelectedItem()) == "Edit") 
             {
-                JOptionPane.showMessageDialog(null, "Sorry can't run while its empty, check your input panel");
+                if (
+                    text1.getText().equals("") || 
+                    text2.getText().equals("") ||
+                    text3.getText().equals("") ||
+                    text4.getText().equals("")
+                    ) 
+                {
+                    JOptionPane.showMessageDialog(null, "Sorry can't run while its empty, check your input panel");
+                }
+                else
+                {
+                    //set durasi lampu
+                    manager.setDurasi(
+                        Integer.parseInt(text1.getText()), 
+                        Integer.parseInt(text2.getText()), 
+                        Integer.parseInt(text3.getText()), 
+                        Integer.parseInt(text4.getText())
+                    );
+                }
             }
             else
             {
-                //set durasi lampu
-                manager.setDurasi(
-                    Integer.parseInt(text1.getText()), 
-                    Integer.parseInt(text2.getText()), 
-                    Integer.parseInt(text3.getText()), 
-                    Integer.parseInt(text4.getText())
-                );
+                //jalan 1, jalan 2, jalan 3, jalan 4
+                manager.setDurasi(10, 10, 10, 10);
             }
-        }
-        else
-        {
-            //jalan 1, jalan 2, jalan 3, jalan 4
-            manager.setDurasi(10, 10, 10, 10);
-        }
-        
-        //set statis/dinamis
-        if (!dinamis.isSelected()) 
-        {
-            manager.setKondisi("statis");
-        }
-        else
-        {
-            manager.setKondisi("dinamis");
-        }
 
-        //set buffer
-        manager.setSize(10);
-        
-        if (run == true) 
-        {
+            //set statis/dinamis
+            if (!dinamis.isSelected()) 
+            {
+                manager.setKondisi("statis");
+            }
+            else
+            {
+                manager.setKondisi("dinamis");
+            }
+
+            //set buffer
+            manager.setSize(30);
             manager.start();
+        
         }
+//        if (run == true) 
+//        {
+//            manager.start();
+//        }
     }//GEN-LAST:event_startActionPerformed
 
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
@@ -731,9 +738,9 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox9ActionPerformed
 
     private void jCommPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCommPortActionPerformed
-//        if (Serial.getConnected() == true) {
-//            Serial.disconnect();
-//        }
+        if (serial.getConnected() == true) {
+            serial.disconnect();
+        }
     }//GEN-LAST:event_jCommPortActionPerformed
 
     private void lSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lSearchMouseClicked
@@ -742,8 +749,9 @@ public class UI extends javax.swing.JFrame {
         jCommPort.setVisible(true);
         lPort.setVisible(true);
         lSearch.setVisible(false);
-//        Serial.cekSerialPort();
+        serial.cekSerialPort();
         bConn.enable();
+        run = false;
     }//GEN-LAST:event_lSearchMouseClicked
 
     private void lSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lSearchMouseEntered
@@ -752,38 +760,29 @@ public class UI extends javax.swing.JFrame {
 
     private void bConnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConnActionPerformed
         // TODO add your handling code here:
-//        System.out.println(bConn.getText());
-//        if (bConn.getText().equals("Connect")) {
-//            Serial.connect();
-//            if (Serial.getConnected() == true) {
-//                if (Serial.initIOStream() == true) {
-//                    Serial.initListener();
+        System.out.println(bConn.getText());
+        if (bConn.getText().equals("Connect")) {
+            serial.connect();
+            if (serial.getConnected() == true) {
+                if (serial.initIOStream() == true) {
+                    serial.initListener();
 //                    txtDataOut.setVisible(true);
 //                    btnKirim.setVisible(true);
 //                    txtDataOut.getCursor();
-//                }
-//            }
-//
-//        } else {
-//            if (Serial.getConnected() == true) {
-//                Serial.disconnect();
-//            }
+                }
+            }
+            run = true;
+
+        } else {
+            if (serial.getConnected() == true) {
+                serial.disconnect();
+                run = false;
+            }
 //            init();
 //            lSearch.setVisible(true);
-//            bConn.disable();
-//        }
+            bConn.disable();
+        }
     }//GEN-LAST:event_bConnActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        if (String.valueOf(jComboBox1.getSelectedItem()) == "Connect Device") 
-        {
-            jPanSearch.setVisible(true);
-        }
-        else
-        {
-            jPanSearch.setVisible(false);
-        }
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -872,7 +871,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel grenL;
     private javax.swing.JLabel grenR;
     private javax.swing.JLabel grenU;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox9;
     public javax.swing.JComboBox jCommPort;
     private javax.swing.JLabel jLabel1;
