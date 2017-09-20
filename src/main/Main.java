@@ -23,7 +23,8 @@ public class Main {
     public static void main(String[] args) 
     {
         Manager main = new Manager();
-        UI gui = new UI(main);
+        UI gui = new UI();
+        gui.setManager(main);
         gui.setVisible(true);
     }
 }

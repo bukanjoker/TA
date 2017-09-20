@@ -46,17 +46,25 @@ public class Mobil {
     public long random(String pil)
     {
         long val = 0;
-        switch (pil)
+        if (pil == "default")
         {
-            //default random
-            case "default": val = new Random().nextInt(300)+1;
-                    break;
-            //random distribution
-            case "pertama": val = new Random().nextInt(2)+1;
-                    break;
-            case "kedua": val = new Random().nextInt(3)+1;
-                    break;
+            val = new Random().nextInt(300)+1;
         }
+        else if (pil == "")
+        {
+            //rumus
+        }
+//        switch (pil)
+//        {
+//            //default random
+//            case "default": val = new Random().nextInt(300)+1;
+//                    break;
+//            //random distribution
+//            case "pertama": val = new Random().nextInt(2)+1;
+//                    break;
+//            case "kedua": val = new Random().nextInt(3)+1;
+//                    break;
+//        }
         
         return val*10;
     }

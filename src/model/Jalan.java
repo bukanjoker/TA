@@ -36,7 +36,7 @@ public class Jalan {
         
         lampu = new Lampu();
         
-        listMobil = new ArrayList<>();
+        listMobil = new ArrayList<Mobil>();
     }
     
     public synchronized void add(int jml)
@@ -109,6 +109,7 @@ public class Jalan {
         else
         {
             wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
+//            System.out.println("waktu datang: "+listMobil.get(0).getWaktuDatang());
         }
         return wait/1000;
     }
