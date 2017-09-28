@@ -59,10 +59,10 @@ public class Manager extends Thread {
         add2.start();
         add3.start();
         add4.start();
-        remove1.start();
-        remove2.start();
-        remove3.start();
-        remove4.start();
+//        remove1.start();
+//        remove2.start();
+//        remove3.start();
+//        remove4.start();
         
         while (true)
         {
@@ -91,12 +91,23 @@ public class Manager extends Thread {
     
     public void print(int i)
     {
+        double rasio = 0;
+        double wait = 0;
+        int listSize = 0;
+        
+        if (!jalan[i].getListMobil().isEmpty())
+        {
+            rasio = jalan[i].getRatio();
+            wait = jalan[i].getWait();
+            listSize = jalan[i].getListMobil().size();
+        }
+        
         System.out.print("["+jalan[i].getPosisi()+"]");
         System.out.print("["+jalan[i].getLampu().getWarna()+"]");
-        System.out.print("[Ratio:"+jalan[i].getRatio()+"]");
-        System.out.print("[Waktu Tunggu:"+jalan[i].getWait()+"]");
-        System.out.print("[Jumlah Mobil: "+jalan[i].getListMobil().size()+"]");
-        System.out.println("");   
+        System.out.print("[Ratio:"+rasio+"]");
+        System.out.print("[Waktu Tunggu:"+wait+"]");
+        System.out.print("[Jumlah Mobil: "+listSize+"]");
+        System.out.println("");
     }
     
     public void setDurasi(long jalan1, long jalan2, long jalan3, long jalan4)

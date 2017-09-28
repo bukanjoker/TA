@@ -39,7 +39,7 @@ public class UI extends javax.swing.JFrame {
     
     public UI() 
     {
-        serial = new Serial(this);
+        serial = new Serial();
         initComponents();
         init();
     }
@@ -157,17 +157,7 @@ public class UI extends javax.swing.JFrame {
         {
             int buffer = 0;
             for (int j = 0; j < jalan[i].getListMobil().size(); j++) 
-            {   
-//                if (buffer[i] > jalan[i].getListMobil().size()) 
-//                {
-//                    cars[i][buffer[i]-1].setVisible(false);
-//                }
-//                else 
-//                {
-//                    cars[i][j].setVisible(true);
-//                }
-//                buffer[i] = jalan[i].getListMobil().size();
-                
+            {
                 if (j % 3 == 0)
                 {
                     cars[i][buffer].setVisible(true);
@@ -178,18 +168,26 @@ public class UI extends javax.swing.JFrame {
                     cars[i][buffer].setVisible(false);
                 }
             }
+            
+            if (30 != jalan[i].getListMobil().size())
+            {
+                cars[i][10].setVisible(false);
+            }
+            else
+            {
+                cars[i][10].setVisible(true);
+            }
         }
     }
     
     public void lampu()
     {
-        int tmp = 0;
-        
         for (int i = 0; i < jalan.length; i++)
         {
-            if (jalan[i].getLampu().getWarna() == Warna.HIJAU) 
+            if (jalan[i].isStatus() == true)
             {
-                tmp = i;
+                trafficlight[2][i].setVisible(true);
+                trafficlight[0][i].setVisible(false);
             }
             else
             {
@@ -197,9 +195,6 @@ public class UI extends javax.swing.JFrame {
                 trafficlight[0][i].setVisible(true);
             }
         }
-        
-        trafficlight[0][tmp].setVisible(false);
-        trafficlight[2][tmp].setVisible(true);
     }
 
     public Jalan[] getJalan() {
@@ -738,9 +733,10 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox9ActionPerformed
 
     private void jCommPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCommPortActionPerformed
-        if (serial.getConnected() == true) {
-            serial.disconnect();
-        }
+//        if (serial.getConnected() == true) 
+//        {
+//            serial.disconnect();
+//        }
     }//GEN-LAST:event_jCommPortActionPerformed
 
     private void lSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lSearchMouseClicked
@@ -752,8 +748,19 @@ public class UI extends javax.swing.JFrame {
         serial.cekSerialPort();
         bConn.enable();
         run = false;
+        
+        for (int i = 0; i < serial.getPortName().size(); i++) {
+            jCommPort.addItem(serial.getPortName().get(i));
+        }
     }//GEN-LAST:event_lSearchMouseClicked
-
+    
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {                                  
+            // TODO add your handling code here:
+            if (serial.getConnected() == true) {
+                serial.disconnect();
+            }
+    }         
+    
     private void lSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lSearchMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_lSearchMouseEntered
@@ -762,24 +769,24 @@ public class UI extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println(bConn.getText());
         if (bConn.getText().equals("Connect")) {
-            serial.connect();
+            serial.connect((String)jCommPort.getSelectedItem());
             if (serial.getConnected() == true) {
                 if (serial.initIOStream() == true) {
                     serial.initListener();
-//                    txtDataOut.setVisible(true);
-//                    btnKirim.setVisible(true);
-//                    txtDataOut.getCursor();
                 }
             }
             run = true;
+            bConn.setText("Disconnect");
 
         } else {
             if (serial.getConnected() == true) {
+                serial.kirimData("5");
                 serial.disconnect();
                 run = false;
+                bConn.setText("Connect");
             }
-//            init();
-//            lSearch.setVisible(true);
+            init();
+            lSearch.setVisible(true);
             bConn.disable();
         }
     }//GEN-LAST:event_bConnActionPerformed

@@ -24,7 +24,7 @@ public class Jalan {
     private double ratio;
     private boolean status;
     private Posisi posisi;
-    private double wait;
+    private double wait,servis;
     private long start;
     private int size;
     private String randomIN, randomOUT;
@@ -37,6 +37,14 @@ public class Jalan {
         lampu = new Lampu();
         
         listMobil = new ArrayList<Mobil>();
+    }
+    
+    public void HRRN()
+    {
+        wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
+        servis = lampu.getDurasi();
+        
+        ratio = (wait + servis)/servis;
     }
     
     public synchronized void add(int jml)
@@ -69,7 +77,7 @@ public class Jalan {
             }
     }
     
-    public synchronized void remove()
+    public void remove()
     {
         while (lampu.getWarna() == Warna.HIJAU)
         {
@@ -102,15 +110,6 @@ public class Jalan {
 
     public double getWait() 
     {
-        if (lampu.getWarna() == Warna.HIJAU || listMobil.size() == 0)
-        {
-            wait = 0;
-        }
-        else
-        {
-            wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
-//            System.out.println("waktu datang: "+listMobil.get(0).getWaktuDatang());
-        }
         return wait/1000;
     }
 

@@ -36,9 +36,9 @@ public class ThreadLampu extends Thread {
         while (true)
         {
             setWarnaLampu();
-            timer(jalan[current].getLampu().getDurasi());
+//            delay(jalan[current].getLampu().getDurasi());
+            lampuWork();
             setCurrent();
-            
         }
     }
     
@@ -75,8 +75,9 @@ public class ThreadLampu extends Thread {
                 if (i != current)
                 {
                     //hrrn calculation
-                    jalan[i].setWait(jalan[i].getListMobil().get(0).getWaktuDatang());
-                    jalan[i].setRatio(HRRN(jalan[i].getWait(), jalan[i].getLampu().getDurasi()));
+//                    jalan[i].setWait(jalan[i].getListMobil().get(0).getWaktuDatang());
+//                    jalan[i].setRatio(HRRN(jalan[i].getWait(), jalan[i].getLampu().getDurasi()));
+                    jalan[i].HRRN();
                     //sort MaxRatio
                     if (jalan[i].getRatio() > ratioMax) 
                     {
@@ -104,26 +105,36 @@ public class ThreadLampu extends Thread {
     
     public void lampuWork()
     {
-        long interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
         long durasi = jalan[current].getLampu().getDurasi();
+        long interval = 0;
         
-        if (durasi-interval > 0)
+        if (jalan[current].getListMobil().size() == 0)
         {
-            durasi = durasi - interval;
-            time = interval;
-            jalan[current].getListMobil().remove(0);
-            interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
+            delay(durasi);
         }
         else
         {
-            time = durasi;
-            durasi = 0;
+            while (durasi > 0)
+            {
+                interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
+                if (durasi - interval > 0)
+                {
+                    delay(interval);
+                    durasi = durasi - interval;
+                    jalan[current].getListMobil().remove(0);
+//                    System.out.println("Mobil["+jalan[current].getPosisi()+"]KELUAR. Jumlah:"+jalan[current].getListMobil().size());
+                }
+                else
+                {
+                    delay(durasi);
+                    durasi = 0;
+                }
+            }
         }
         
-        timer(time);
     }
     
-    public void timer(long durasi)
+    public void delay(long durasi)
     {
         try {
             sleep(durasi);
