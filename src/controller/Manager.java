@@ -59,10 +59,10 @@ public class Manager extends Thread {
         add2.start();
         add3.start();
         add4.start();
-//        remove1.start();
-//        remove2.start();
-//        remove3.start();
-//        remove4.start();
+        remove1.start();
+        remove2.start();
+        remove3.start();
+        remove4.start();
         
         while (true)
         {
@@ -79,7 +79,8 @@ public class Manager extends Thread {
             try 
             {
                 long durasi = jalan[current].getLampu().getDurasi();
-                System.out.println("Durasi: "+durasi/1000+"detik");
+                System.out.print("Durasi: "+durasi/1000+"detik");
+                System.out.println(" Rata-rata menunggu: "+(jalan[0].getWait()+jalan[1].getWait()+jalan[2].getWait()+jalan[3].getWait())/4);
                 System.out.println("");
                 sleep(durasi);
             } 
@@ -94,12 +95,14 @@ public class Manager extends Thread {
         double rasio = 0;
         double wait = 0;
         int listSize = 0;
+        int outSize = 0;
         
         if (!jalan[i].getListMobil().isEmpty())
         {
             rasio = jalan[i].getRatio();
             wait = jalan[i].getWait();
             listSize = jalan[i].getListMobil().size();
+            outSize = jalan[i].getOut();
         }
         
         System.out.print("["+jalan[i].getPosisi()+"]");
@@ -107,6 +110,7 @@ public class Manager extends Thread {
         System.out.print("[Ratio:"+rasio+"]");
         System.out.print("[Waktu Tunggu:"+wait+"]");
         System.out.print("[Jumlah Mobil: "+listSize+"]");
+        System.out.print("[Mobil keluar: "+outSize+"]");
         System.out.println("");
     }
     
@@ -118,9 +122,17 @@ public class Manager extends Thread {
         jalan[3].getLampu().setDurasi(jalan4*1000);
     }
     
-    public void setRandom(int i, String randomIN, String randomOUT)
+    public void setInterval(String value, int inv1, int inv2, int inv3, int inv4)
     {
-        jalan[i].setRandom(randomIN, randomOUT);
+        jalan[0].setValue(value);
+        jalan[1].setValue(value);
+        jalan[2].setValue(value);
+        jalan[3].setValue(value);
+        
+        jalan[0].setInv(inv1*1000);
+        jalan[1].setInv(inv2*1000);
+        jalan[2].setInv(inv3*1000);
+        jalan[3].setInv(inv4*1000);
     }
             
     public Jalan[] getJalan() {

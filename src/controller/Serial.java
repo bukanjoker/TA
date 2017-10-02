@@ -126,7 +126,7 @@ public class Serial implements SerialPortEventListener {
         try 
         {
             outPut.write(a);
-            outPut.flush();
+//            outPut.flush();
         } 
         catch (IOException ex)
         {
@@ -159,10 +159,10 @@ public class Serial implements SerialPortEventListener {
     public void serialEvent(SerialPortEvent spe)
     {
 //        UI main = new UI();
-        if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) 
-        {
-            kirimData("321");         
-        }
+//        if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) 
+//        {
+//            kirimData("321");         
+//        }
     }
 
     public ArrayList<String> getPortName() {

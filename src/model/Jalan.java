@@ -25,9 +25,9 @@ public class Jalan {
     private boolean status;
     private Posisi posisi;
     private double wait,servis;
-    private long start;
-    private int size;
-    private String randomIN, randomOUT;
+    private String value;
+    private long inv;
+    private int out=0,in=0;
 
     public Jalan(Posisi posisi, boolean status)
     {
@@ -41,10 +41,18 @@ public class Jalan {
     
     public void HRRN()
     {
-        wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
+//        long now = System.currentTimeMillis();
+//        wait = now - listMobil.get(0).getWaktuDatang();
+        
         servis = lampu.getDurasi();
         
         ratio = (wait + servis)/servis;
+        
+//        System.out.println(posisi);
+//        System.out.println("now:"+now);
+//        System.out.println("waktu datang:"+listMobil.get(0).getWaktuDatang());
+//        System.out.println("wait:"+wait);
+//        System.out.println("jumlah:"+listMobil.size());
     }
     
     public synchronized void add(int jml)
@@ -52,6 +60,12 @@ public class Jalan {
             if (listMobil.size() < jml) 
             {
                 Mobil m = new Mobil(posisi);
+                
+                if (value == "kedatangan") 
+                {
+                    m.setIntervalDatang(inv);
+                }
+                
                 long interval = m.getIntervalDatang();
 
                 try 
@@ -59,6 +73,7 @@ public class Jalan {
                     Thread.sleep(interval);
                     m.setWaktuDatang(System.currentTimeMillis());
                     listMobil.add(m);
+                    in = in +1;
 //                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
                 } 
                 catch (InterruptedException ex) {
@@ -77,17 +92,23 @@ public class Jalan {
             }
     }
     
-    public void remove()
+    public synchronized void remove()
     {
         while (lampu.getWarna() == Warna.HIJAU)
         {
             if (!listMobil.isEmpty())
             {
+                if (value == "kepergian")
+                {
+                    listMobil.get(0).setIntervalKeluar(inv);
+                }
+                
                 long interval = listMobil.get(0).getIntervalKeluar();
                 try 
                 {
                     Thread.sleep(interval);
                     listMobil.remove(0);
+                    out = out +1;
 //                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
                 }
                 catch (InterruptedException ex) {
@@ -113,9 +134,44 @@ public class Jalan {
         return wait/1000;
     }
 
-    public void setWait(long wait) 
+    public void setWait() 
     {
-        this.wait = wait;
+        if (listMobil.size() != 0)
+        {
+            this.wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
+        }
+    }
+
+    public int getOut() {
+        return out;
+    }
+
+    public void setOut(int out) {
+        this.out = out;
+    }
+
+    public int getIn() {
+        return in;
+    }
+
+    public void setIn(int in) {
+        this.in = in;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public long getInv() {
+        return inv;
+    }
+
+    public void setInv(long inv) {
+        this.inv = inv;
     }
 
     public Lampu getLampu() {
@@ -164,10 +220,5 @@ public class Jalan {
 
     public void setPosisi(Posisi posisi) {
         this.posisi = posisi;
-    }
-
-    public void setRandom(String randomIN, String randomOUT) {
-        this.randomIN = randomIN;
-        this.randomOUT = randomOUT;
     }
 }

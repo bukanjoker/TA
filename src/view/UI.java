@@ -39,22 +39,27 @@ public class UI extends javax.swing.JFrame {
     
     public UI() 
     {
-        serial = new Serial();
         initComponents();
         init();
+        this.setLocationRelativeTo(null);
     }
     
     public void init()
     {
-//        manager = new Manager();
+        manager = new Manager();
+        jalan = manager.getJalan();
+        serial = new Serial();
         cars();
         trafficlight();
-        this.setLocationRelativeTo(null);
         
         text1.setEditable(false);
         text2.setEditable(false);
         text3.setEditable(false);
         text4.setEditable(false);
+        text5.setEditable(false);
+        text6.setEditable(false);
+        text7.setEditable(false);
+        text8.setEditable(false);
         
         jCommPort.setVisible(false);
         lPort.setVisible(false);
@@ -184,10 +189,16 @@ public class UI extends javax.swing.JFrame {
     {
         for (int i = 0; i < jalan.length; i++)
         {
+            //kondisi lampu hijau status == true, [2] == hijau
             if (jalan[i].isStatus() == true)
             {
                 trafficlight[2][i].setVisible(true);
                 trafficlight[0][i].setVisible(false);
+                if (serial.getConnected())
+                {
+                    serial.kirimData(String.valueOf(i));
+//                    System.out.println(String.valueOf(i));
+                }
             }
             else
             {
@@ -205,10 +216,25 @@ public class UI extends javax.swing.JFrame {
         this.jalan = jalan;
     }
     
-    public void setManager(Manager manager)
+    public void setManager()
     {
-        this.manager = manager;
-        this.jalan = manager.getJalan();
+        //jalan 1, jalan 2, jalan 3, jalan 4
+        manager.setDurasi(90, 30, 60, 60);
+
+
+        //set statis/dinamis
+        if (!dinamis.isSelected()) 
+        {
+            manager.setKondisi("statis");
+        }
+        else
+        {
+            manager.setKondisi("dinamis");
+        }
+
+        //set buffer
+        manager.setSize(30);
+        manager.start();
     }
 
     /**
@@ -277,7 +303,6 @@ public class UI extends javax.swing.JFrame {
         carU9 = new javax.swing.JLabel();
         carU10 = new javax.swing.JLabel();
         carU11 = new javax.swing.JLabel();
-        refresh = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         start = new javax.swing.JButton();
         text4 = new javax.swing.JTextField();
@@ -288,21 +313,24 @@ public class UI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         statis = new javax.swing.JRadioButton();
         dinamis = new javax.swing.JRadioButton();
-        jComboBox9 = new javax.swing.JComboBox();
         jPanSearch = new javax.swing.JPanel();
         lPort = new javax.swing.JLabel();
         jCommPort = new javax.swing.JComboBox();
         lSearch = new javax.swing.JLabel();
         bConn = new javax.swing.JButton();
-        stop = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        text5 = new javax.swing.JTextField();
+        text6 = new javax.swing.JTextField();
+        text7 = new javax.swing.JTextField();
+        text8 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        refresh = new javax.swing.JButton();
+        stop = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simulasi Lalu Lintas Perempatan Seokarno Hatta");
@@ -480,15 +508,6 @@ public class UI extends javax.swing.JFrame {
         carU11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/buffermaxUpDown.png"))); // NOI18N
         getContentPane().add(carU11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, -1, -1));
 
-        refresh.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        refresh.setText("REFRESH");
-        refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
-            }
-        });
-        getContentPane().add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 510, 80, 30));
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/rsc/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -499,63 +518,47 @@ public class UI extends javax.swing.JFrame {
                 startActionPerformed(evt);
             }
         });
-        getContentPane().add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 460, 80, 30));
+        getContentPane().add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 460, 80, 30));
 
         text4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text4ActionPerformed(evt);
             }
         });
-        getContentPane().add(text4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 390, 50, -1));
+        getContentPane().add(text4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 390, 50, -1));
 
         text1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text1ActionPerformed(evt);
             }
         });
-        getContentPane().add(text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 50, -1));
+        getContentPane().add(text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 300, 50, -1));
 
         text2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text2ActionPerformed(evt);
             }
         });
-        getContentPane().add(text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 330, 50, -1));
+        getContentPane().add(text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 330, 50, -1));
 
         text3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 text3ActionPerformed(evt);
             }
         });
-        getContentPane().add(text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 360, 50, -1));
+        getContentPane().add(text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 360, 50, -1));
 
         jLabel3.setText("Jalan 4");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 390, -1, -1));
 
-        jLabel4.setText("Jalan 1");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, -1, -1));
+        jLabel4.setText("Kepergian");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 270, -1, -1));
 
         jLabel5.setText("Jalan 2");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 330, -1, -1));
 
         jLabel6.setText("Jalan 3");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 360, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel7.setText("detik");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel8.setText("detik");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel9.setText("detik");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 330, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel10.setText("detik");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 360, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel11.setText("TIPE LAMPU :");
@@ -571,14 +574,6 @@ public class UI extends javax.swing.JFrame {
         dinamis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         dinamis.setText("dinamis");
         getContentPane().add(dinamis, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 180, -1, -1));
-
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Default", "Edit" }));
-        jComboBox9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox9ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox9, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 270, -1, -1));
 
         jPanSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(51, 204, 0)));
         jPanSearch.setLayout(null);
@@ -626,21 +621,71 @@ public class UI extends javax.swing.JFrame {
 
         getContentPane().add(jPanSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, 220, 90));
 
+        jLabel15.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel15.setText("SET INTERVAL");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 240, -1, -1));
+
+        text5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(text5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 390, 50, -1));
+
+        text6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(text6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, 50, -1));
+
+        text7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 330, 50, -1));
+
+        text8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text8ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 360, 50, -1));
+
+        jLabel7.setText("Jalan 1");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, -1, -1));
+
+        jLabel8.setText("Kedatangan");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "default", "kedatangan", "kepergian" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 270, -1, -1));
+
+        refresh.setText("REFRESH");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+        getContentPane().add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 520, -1, 30));
+
         stop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         stop.setText("STOP");
-        getContentPane().add(stop, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 460, 80, 30));
-
-        jLabel15.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        jLabel15.setText("SET DURASI LAMPU");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, -1, -1));
+        stop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopActionPerformed(evt);
+            }
+        });
+        getContentPane().add(stop, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 460, 80, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-        lampu();
-        mobil();
-    }//GEN-LAST:event_refreshActionPerformed
 
     private void text4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text4ActionPerformed
         // TODO add your handling code here:
@@ -659,78 +704,51 @@ public class UI extends javax.swing.JFrame {
     }//GEN-LAST:event_text3ActionPerformed
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        if (run == false) 
+        
+        if (manager.isAlive())
         {
-            //if not connected
-            JOptionPane.showMessageDialog(null, "Sorry can't start, please connect device first");
+            JOptionPane.showMessageDialog(null, "Program has already running");
         }
         else
         {
-            if (String.valueOf(jComboBox9.getSelectedItem()) == "Edit") 
+            if (run == false) 
             {
-                if (
-                    text1.getText().equals("") || 
-                    text2.getText().equals("") ||
-                    text3.getText().equals("") ||
-                    text4.getText().equals("")
-                    ) 
+                if (text1.getText() == "" || text5.getText() == ""
+//                || text2.getText() == "" || text6.getText() == ""
+//                || text3.getText() == "" || text7.getText() == ""
+//                || text4.getText() == "" || text7.getText() == ""
+                        ) 
                 {
-                    JOptionPane.showMessageDialog(null, "Sorry can't run while its empty, check your input panel");
+                    JOptionPane.showMessageDialog(null, "Sorry can't start, please fill in the boxes");
                 }
                 else
                 {
-                    //set durasi lampu
-                    manager.setDurasi(
-                        Integer.parseInt(text1.getText()), 
-                        Integer.parseInt(text2.getText()), 
-                        Integer.parseInt(text3.getText()), 
-                        Integer.parseInt(text4.getText())
-                    );
+                    String input1 = null, input2 = null, input3 = null, input4 = null;
+
+                    if (jComboBox1.getSelectedItem().toString() == "kedatangan") 
+                    {
+                        input1 = text1.getText();
+                        input2 = text2.getText();
+                        input3 = text3.getText();
+                        input4 = text4.getText();
+                    }
+                    else if (jComboBox1.getSelectedItem().toString() == "kepergian")
+                    {
+                        input1 = text5.getText();
+                        input2 = text6.getText();
+                        input3 = text7.getText();
+                        input4 = text8.getText();
+                    }
+                    manager.setInterval(jComboBox1.getSelectedItem().toString(), Integer.parseInt(input1), Integer.parseInt(input2), Integer.parseInt(input3), Integer.parseInt(input4));
+                    setManager();
                 }
             }
             else
             {
-                //jalan 1, jalan 2, jalan 3, jalan 4
-                manager.setDurasi(10, 10, 10, 10);
+                setManager();
             }
-
-            //set statis/dinamis
-            if (!dinamis.isSelected()) 
-            {
-                manager.setKondisi("statis");
-            }
-            else
-            {
-                manager.setKondisi("dinamis");
-            }
-
-            //set buffer
-            manager.setSize(30);
-            manager.start();
-        
         }
-//        if (run == true) 
-//        {
-//            manager.start();
-//        }
     }//GEN-LAST:event_startActionPerformed
-
-    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
-        if (String.valueOf(jComboBox9.getSelectedItem()) == "Default")
-        {
-            text1.setEditable(false);
-            text2.setEditable(false);
-            text3.setEditable(false);
-            text4.setEditable(false);
-        }
-        else
-        {
-            text1.setEditable(true);
-            text2.setEditable(true);
-            text3.setEditable(true);
-            text4.setEditable(true);
-        }
-    }//GEN-LAST:event_jComboBox9ActionPerformed
 
     private void jCommPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCommPortActionPerformed
 //        if (serial.getConnected() == true) 
@@ -785,11 +803,88 @@ public class UI extends javax.swing.JFrame {
                 run = false;
                 bConn.setText("Connect");
             }
+            manager.stop();
             init();
             lSearch.setVisible(true);
             bConn.disable();
         }
     }//GEN-LAST:event_bConnActionPerformed
+
+    private void text5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text5ActionPerformed
+
+    private void text6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text6ActionPerformed
+
+    private void text7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text7ActionPerformed
+
+    private void text8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text8ActionPerformed
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+       lampu();
+       mobil();
+//        serial.kirimData("0");
+    }//GEN-LAST:event_refreshActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (jComboBox1.getSelectedItem().toString() == "kedatangan")
+        {
+            text1.setEditable(true);
+            text2.setEditable(true);
+            text3.setEditable(true);
+            text4.setEditable(true);
+            text5.setEditable(false);
+            text6.setEditable(false);
+            text7.setEditable(false);
+            text8.setEditable(false);
+            
+            run = false;
+        }
+        else if (jComboBox1.getSelectedItem().toString() == "kepergian")
+        {
+            text1.setEditable(false);
+            text2.setEditable(false);
+            text3.setEditable(false);
+            text4.setEditable(false);
+            text5.setEditable(true);
+            text6.setEditable(true);
+            text7.setEditable(true);
+            text8.setEditable(true);
+            
+            run = false;
+        }
+        else
+        {
+            text1.setEditable(false);
+            text2.setEditable(false);
+            text3.setEditable(false);
+            text4.setEditable(false);
+            text5.setEditable(false);
+            text6.setEditable(false);
+            text7.setEditable(false);
+            text8.setEditable(false);
+            
+            run = true;
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
+        if (manager.isAlive()) 
+        {
+            manager.stop();
+            init();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Sorry program not running yet");
+        }
+    }//GEN-LAST:event_stopActionPerformed
 
     /**
      * @param args the command line arguments
@@ -878,10 +973,9 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel grenL;
     private javax.swing.JLabel grenR;
     private javax.swing.JLabel grenU;
-    private javax.swing.JComboBox jComboBox9;
+    private javax.swing.JComboBox jComboBox1;
     public javax.swing.JComboBox jCommPort;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
@@ -890,7 +984,6 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanSearch;
     private javax.swing.JLabel lPort;
     private javax.swing.JLabel lSearch;
@@ -906,6 +999,10 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JTextField text2;
     private javax.swing.JTextField text3;
     private javax.swing.JTextField text4;
+    private javax.swing.JTextField text5;
+    private javax.swing.JTextField text6;
+    private javax.swing.JTextField text7;
+    private javax.swing.JTextField text8;
     private javax.swing.JLabel yelB;
     private javax.swing.JLabel yelL;
     private javax.swing.JLabel yelR;

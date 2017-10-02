@@ -36,16 +36,10 @@ public class ThreadLampu extends Thread {
         while (true)
         {
             setWarnaLampu();
-//            delay(jalan[current].getLampu().getDurasi());
-            lampuWork();
+            delay(jalan[current].getLampu().getDurasi());
+//            lampuWork();
             setCurrent();
         }
-    }
-    
-    public double HRRN(double wait, long servis)
-    {
-        double ratio = (wait+servis)/servis;
-        return ratio;
     }
     
     public void setWarnaLampu()
@@ -61,11 +55,13 @@ public class ThreadLampu extends Thread {
                 jalan[i].setStatus(true);
 //                System.out.println("Lampu ["+jalan[i].getPosisi()+"] "+jalan[i].getLampu().getWarna()+" "+jalan[i].getLampu().getDurasi()/1000+"detik");
             }
+            jalan[i].setWait();
         }
     }
     
     public void setCurrent()
     {
+        //dinamis
         if (kondisi == "dinamis")
         {
             double ratioMax = 0;
@@ -75,8 +71,6 @@ public class ThreadLampu extends Thread {
                 if (i != current)
                 {
                     //hrrn calculation
-//                    jalan[i].setWait(jalan[i].getListMobil().get(0).getWaktuDatang());
-//                    jalan[i].setRatio(HRRN(jalan[i].getWait(), jalan[i].getLampu().getDurasi()));
                     jalan[i].HRRN();
                     //sort MaxRatio
                     if (jalan[i].getRatio() > ratioMax) 
@@ -87,6 +81,8 @@ public class ThreadLampu extends Thread {
                 }
             }
         }
+        
+        //statis
         else
         {
             if (iterasi < jalan.length-1)

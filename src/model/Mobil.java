@@ -54,17 +54,6 @@ public class Mobil {
         {
             //rumus
         }
-//        switch (pil)
-//        {
-//            //default random
-//            case "default": val = new Random().nextInt(300)+1;
-//                    break;
-//            //random distribution
-//            case "pertama": val = new Random().nextInt(2)+1;
-//                    break;
-//            case "kedua": val = new Random().nextInt(3)+1;
-//                    break;
-//        }
         
         return val*10;
     }

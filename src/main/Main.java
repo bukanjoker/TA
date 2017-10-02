@@ -22,9 +22,9 @@ import view.UI;
 public class Main {
     public static void main(String[] args) 
     {
-        Manager main = new Manager();
+//        Manager main = new Manager();
         UI gui = new UI();
-        gui.setManager(main);
+//        gui.setManager(main);
         gui.setVisible(true);
     }
 }
