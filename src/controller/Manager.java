@@ -28,8 +28,8 @@ public class Manager extends Thread {
         //inisiasi 4 jalan
         jalan = new Jalan[4];
         jalan[0] = new Jalan(Posisi.bawah, false);
-        jalan[1] = new Jalan(Posisi.kanan, false);
-        jalan[2] = new Jalan(Posisi.atas, false);
+        jalan[1] = new Jalan(Posisi.atas, false);
+        jalan[2] = new Jalan(Posisi.kanan, false);
         jalan[3] = new Jalan(Posisi.kiri, false);
     }
     
@@ -73,7 +73,7 @@ public class Manager extends Thread {
                 {
                     current = i;
                 }
-                print(i);
+//                print(i);
             }
             
             try 

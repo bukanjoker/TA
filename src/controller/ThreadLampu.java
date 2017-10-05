@@ -85,6 +85,7 @@ public class ThreadLampu extends Thread {
         //statis
         else
         {
+            nextCurr = iterasi;
             if (iterasi < jalan.length-1)
             {
                 iterasi++;
@@ -93,7 +94,6 @@ public class ThreadLampu extends Thread {
             {
                 iterasi = 0;
             }
-            nextCurr = urutan[iterasi];
         }
         
         current = nextCurr;

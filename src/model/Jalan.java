@@ -28,6 +28,7 @@ public class Jalan {
     private String value;
     private long inv;
     private int out=0,in=0;
+    private String waktu;
 
     public Jalan(Posisi posisi, boolean status)
     {
@@ -59,12 +60,7 @@ public class Jalan {
     {
             if (listMobil.size() < jml) 
             {
-                Mobil m = new Mobil(posisi);
-                
-                if (value == "kedatangan") 
-                {
-                    m.setIntervalDatang(inv);
-                }
+                Mobil m = new Mobil(posisi,waktu);
                 
                 long interval = m.getIntervalDatang();
 
@@ -74,7 +70,7 @@ public class Jalan {
                     m.setWaktuDatang(System.currentTimeMillis());
                     listMobil.add(m);
                     in = in +1;
-//                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
+                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
                 } 
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,18 +94,13 @@ public class Jalan {
         {
             if (!listMobil.isEmpty())
             {
-                if (value == "kepergian")
-                {
-                    listMobil.get(0).setIntervalKeluar(inv);
-                }
-                
                 long interval = listMobil.get(0).getIntervalKeluar();
                 try 
                 {
                     Thread.sleep(interval);
                     listMobil.remove(0);
                     out = out +1;
-//                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
+                    System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
                 }
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,6 +131,14 @@ public class Jalan {
         {
             this.wait = System.currentTimeMillis() - listMobil.get(0).getWaktuDatang();
         }
+    }
+
+    public String getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(String waktu) {
+        this.waktu = waktu;
     }
 
     public int getOut() {
