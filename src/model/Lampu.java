@@ -5,6 +5,7 @@
  */
 package model;
 
+import util.Posisi;
 import util.Warna;
 
 /**
@@ -13,10 +14,13 @@ import util.Warna;
  */
 public class Lampu {
     private Warna warna;
+    private Posisi posisi;
     private long durasi;
 
-    public Lampu() {
+    public Lampu(Posisi posisi)
+    {
         this.warna = warna.merah;
+        this.posisi = posisi;
     }
 
     public Warna getWarna() {

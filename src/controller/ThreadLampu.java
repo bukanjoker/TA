@@ -112,7 +112,7 @@ public class ThreadLampu extends Thread {
         {
             while (durasi > 0)
             {
-                interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
+//                interval = jalan[current].getListMobil().get(0).getIntervalKeluar();
                 if (durasi - interval > 0)
                 {
                     delay(interval);

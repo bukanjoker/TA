@@ -33,6 +33,7 @@ public class UI extends javax.swing.JFrame {
     Serial serial;
     private Timer timer;
     private Jalan[] jalan;
+    private Lampu[] lampu;
     private int[] buffer = new int[4];
     private Manager manager;
     private boolean run = true;
@@ -48,6 +49,7 @@ public class UI extends javax.swing.JFrame {
     {
         manager = new Manager();
         jalan = manager.getJalan();
+        lampu = manager.getLampu();
         serial = new Serial();
         cars();
         trafficlight();
@@ -189,8 +191,7 @@ public class UI extends javax.swing.JFrame {
     {
         for (int i = 0; i < jalan.length; i++)
         {
-            //kondisi lampu hijau status == true, [2] == hijau
-            if (jalan[i].isStatus() == true)
+            if (lampu[i].getWarna() == Warna.HIJAU)
             {
                 trafficlight[2][i].setVisible(true);
                 trafficlight[0][i].setVisible(false);
@@ -232,9 +233,9 @@ public class UI extends javax.swing.JFrame {
         {
             manager.setKondisi("dinamis");
         }
+        
+        
 
-        //set buffer
-        manager.setSize(30);
         manager.start();
     }
 
@@ -762,6 +763,19 @@ public class UI extends javax.swing.JFrame {
             {
                 setManager();
             }
+            
+//            while (manager.isAlive())
+//            {
+//                manager.print();
+//                mobil();
+//                lampu();
+//                
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
         }
     }//GEN-LAST:event_startActionPerformed
 
@@ -892,7 +906,12 @@ public class UI extends javax.swing.JFrame {
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
         if (manager.isAlive()) 
         {
+            run = false;
             manager.stop();
+            jalan[0].stop();
+            jalan[1].stop();
+            jalan[2].stop();
+            jalan[3].stop();
             init();
         }
         else

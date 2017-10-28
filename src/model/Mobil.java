@@ -17,11 +17,11 @@ import util.Posisi;
  * @author bukanjoker
  */
 public class Mobil {
-    private long intervalDatang, intervalKeluar;
+    private double intervalDatang, intervalKeluar;
     private long waktuDatang;
     private Posisi posisi;
     
-    private double alpha,beta,gamma,delta,lamda,xi,miu,sigma,k;
+    private double alpha,beta,gamma,delta,lamda,xi,miu,sigma,k,m,a,b;
     private String waktu;
 
     public Mobil(Posisi posisi, String waktu) 
@@ -34,27 +34,27 @@ public class Mobil {
 //        System.out.println(posisi+", "+intervalDatang+", "+intervalKeluar);
     }
     
-    public long random(String pil)
+    public double random(String pil)
     {
-        long val = 0;
+        double val = 0;
         if (pil == "default")
         {
-            val = (new Random().nextInt(30)+1)*100;
+            val = ((new Random().nextInt(300))+1)*0.01;
         }
-        else if (pil == "beta")
+        else if (pil == "gamma")
         {
             //shape = alpha, scale = beta
-            val = Math.round(new Gamma(alpha, beta).random()*1000);
+            val = new Gamma(alpha, beta).random();
         }
         else if (pil == "gen.pareto")
         {
             //shape = k, scale = sigma, location = miu
-            val = Math.round(new GeneralizedPareto(miu, sigma, k).random()*1000);
+            val = new GeneralizedPareto(miu, sigma, k).random();
         }
         else if (pil == "log.logistic")
         {
             //shape = alpha, scale = beta
-            val = Math.round(new Logistic(alpha, beta).random()*1000);
+            val = new Logistic(alpha, beta).random();
         }
         else if (pil == "inv.gaussian")
         {
@@ -65,20 +65,20 @@ public class Mobil {
             double test = rand.nextDouble();
             if (test <= (miu)/(miu+x)) 
             {
-                val = Math.round(x*1000);
+                val = x;
             }
             else
             {
-                val = Math.round(((miu*miu)/x)*1000);
+                val = (miu*miu)/x;
             }
         }
         else if (pil == "person5")
         {
             //personV == invGamma, shape = alpha, scale = beta
-            val = Math.round(new InvGamma(alpha, beta).random()*1000);
+            val = new InvGamma(alpha, beta).random();
         }
         
-        return val;
+        return Math.abs(val);
     }
     
     public void setRandomDatang()
@@ -92,16 +92,23 @@ public class Mobil {
                 lamda = 4.0928;
                 miu = 4.9426;
                 gamma = -0.09513;
-                random = "default";
+                random = "inv.gaussian";
             }
             else if (posisi == Posisi.bawah)
             {
                 //johnson sb
+                gamma = 1.6618;
+                sigma = 0.49968;
+                lamda = 10.173;
+                xi = 0.71194;
                 random = "default";
             }
             else if (posisi == Posisi.kanan)
             {
                 //pert
+                m = 0.41292;
+                a = 0.22572;
+                b = 4.1709;
                 random = "default";
             }
             else if (posisi == Posisi.kiri)
@@ -117,6 +124,10 @@ public class Mobil {
             if (posisi == Posisi.atas) 
             {
                 //gen. gamma
+                k = 0.80681;
+                alpha = 1.082;
+                beta = 1.5251;
+                gamma = 0.43;
                 random = "default";
             }
             else if (posisi == Posisi.bawah)
@@ -124,11 +135,15 @@ public class Mobil {
                 alpha = 3.3977;
                 beta = 2.2618;
                 gamma = 0;
-                random = "default";
+                random = "pearson5";
             }
             else if (posisi == Posisi.kanan)
             {
                 //burr
+                k = 0.2782;
+                alpha = 36.805;
+                beta = 3.6639;
+                gamma = -3.0226;
                 random = "default";
             }
             else if (posisi == Posisi.kiri)
@@ -144,6 +159,10 @@ public class Mobil {
             if (posisi == Posisi.atas) 
             {
                 //johnson sb
+                gamma = 1.7744;
+                sigma = 0.68039;
+                lamda = 29.963;
+                xi = 0.06613;
                 random = "default";
             }
             else if (posisi == Posisi.bawah)
@@ -161,6 +180,9 @@ public class Mobil {
             else if (posisi == Posisi.kiri)
             {
                 //pert
+                m = 0.58489;
+                a = 0.1942;
+                b = 2.984;
                 random = "default";
             }
         }
@@ -184,16 +206,28 @@ public class Mobil {
             else if (posisi == Posisi.bawah)
             {
                 //johnson sb
+                gamma = 3.0738;
+                sigma = 1.3066;
+                lamda = 13.227;
+                xi = 0.05014;
                 random = "default";
             }
             else if (posisi == Posisi.kanan)
             {
                 //dagum
+                k = 0.23758;
+                alpha = 3.5235;
+                beta = 1.5848;
+                gamma = 0.31;
                 random = "default";
             }
             else if (posisi == Posisi.kiri)
             {
                 //burr
+                k = 1.4804;
+                alpha = 1.8852;
+                beta = 0.64317;
+                gamma = 0.41488;
                 random = "default";
             }
         }
@@ -238,11 +272,19 @@ public class Mobil {
             else if (posisi == Posisi.bawah)
             {
                 //johnson sb
+                gamma = 1.6802;
+                sigma = 0.67487;
+                lamda = 4.3649;
+                xi = 0.36214;
                 random = "default";
             }
             else if (posisi == Posisi.kanan)
             {
                 //johnson sb
+                gamma = 1.8197;
+                sigma = 1.5718;
+                lamda = 5.3834;
+                xi = -0.23763;
                 random = "default";
             }
             else if (posisi == Posisi.kiri)
@@ -254,10 +296,10 @@ public class Mobil {
             }
         }
         
-        intervalKeluar = Math.abs(random(random));
+        intervalKeluar = random(random);
     }
 
-    public long getIntervalDatang() {
+    public double getIntervalDatang() {
         return intervalDatang;
     }
 
@@ -265,7 +307,7 @@ public class Mobil {
         this.intervalDatang = intervalDatang;
     }
 
-    public long getIntervalKeluar() {
+    public double getIntervalKeluar() {
         return intervalKeluar;
     }
 

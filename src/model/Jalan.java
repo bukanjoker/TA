@@ -18,7 +18,7 @@ import util.Warna;
  *
  * @author bukanjoker
  */
-public class Jalan {
+public class Jalan extends Thread {
     private Lampu lampu;
     private ArrayList<Mobil> listMobil;
     private double ratio;
@@ -30,21 +30,24 @@ public class Jalan {
     private int out=0,in=0;
     private String waktu;
 
-    public Jalan(Posisi posisi, boolean status)
+    public Jalan(Posisi posisi, String waktu)
     {
-        this.posisi = posisi;
-        this.status = status;
-        
-        lampu = new Lampu();
-        
+        this.posisi = posisi;        
+        this.waktu = waktu;
         listMobil = new ArrayList<Mobil>();
+    }
+    
+    @Override
+    public void run()
+    {
+        while (true)
+        {
+            add(30);
+        }
     }
     
     public void HRRN()
     {
-//        long now = System.currentTimeMillis();
-//        wait = now - listMobil.get(0).getWaktuDatang();
-        
         servis = lampu.getDurasi();
         
         ratio = (wait + servis)/servis;
@@ -56,48 +59,48 @@ public class Jalan {
 //        System.out.println("jumlah:"+listMobil.size());
     }
     
-    public synchronized void add(int jml)
+    public void add(int jml)
     {
             if (listMobil.size() < jml) 
             {
                 Mobil m = new Mobil(posisi,waktu);
                 
-                long interval = m.getIntervalDatang();
+                double interval = m.getIntervalDatang();
 
                 try 
                 {
-                    Thread.sleep(interval);
+                    sleep(Math.round(interval*1000));
                     m.setWaktuDatang(System.currentTimeMillis());
                     listMobil.add(m);
                     in = in +1;
-                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size());
+                    System.out.println("Mobil["+posisi+"]masuk. Jumlah:"+listMobil.size()+" interval:"+m.getIntervalDatang());
                 } 
                 catch (InterruptedException ex) {
                     Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
                 }
 //                notifyAll();
             }
-            else
-            {
-                try {
-//                    System.out.println("["+posisi+"]add loading...");
-                    wait(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+//            else
+//            {
+//                try {
+////                    System.out.println("["+posisi+"]add loading...");
+////                    wait(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(Jalan.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
     }
     
-    public synchronized void remove()
+    public void remove()
     {
         while (lampu.getWarna() == Warna.HIJAU)
         {
             if (!listMobil.isEmpty())
             {
-                long interval = listMobil.get(0).getIntervalKeluar();
+                double interval = listMobil.get(0).getIntervalKeluar();
                 try 
                 {
-                    Thread.sleep(interval);
+                    sleep(Math.round(interval*1000));
                     listMobil.remove(0);
                     out = out +1;
                     System.out.println("Mobil["+posisi+"]KELUAR. Jumlah:"+listMobil.size());
